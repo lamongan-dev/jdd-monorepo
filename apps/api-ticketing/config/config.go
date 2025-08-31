@@ -1,0 +1,15 @@
+package config
+
+import (
+	"api-ticketing/internal/logging"
+	"context"
+
+	"github.com/joho/godotenv"
+)
+
+func LoadEnv() {
+	if err := godotenv.Load(); err != nil {
+		logging.LogInfo(context.Background(), "No env file found")
+	}
+
+}
