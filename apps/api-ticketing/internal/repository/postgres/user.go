@@ -124,8 +124,8 @@ func (u *UserRepository) GetUser(ctx context.Context, id uuid.UUID) (*domain.Use
 		&user.UpdatedAt,
 	)
 	if err != nil {
-		span.RecordError(err)
-		//u.Metrics.UserRepoCalls.WithLabelValues("GetUser", "error").Inc()
+		// span.RecordError(err)
+		// u.Metrics.UserRepoCalls.WithLabelValues("GetUser", "error").Inc()
 		return nil, err
 	}
 

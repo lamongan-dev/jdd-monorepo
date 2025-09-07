@@ -13,6 +13,7 @@ import (
 	"api-ticketing/database"
 	"api-ticketing/domain"
 	"api-ticketing/internal/logging"
+	http_repo "api-ticketing/internal/repository/http"
 	"api-ticketing/internal/repository/postgres"
 	"api-ticketing/internal/rest"
 	"api-ticketing/internal/rest/middleware"
@@ -63,11 +64,14 @@ func main() {
 	})
 	userRepo := postgres.NewUserRepository(dbPool)
 	userService := service.NewUserService(userRepo)
+	ipaymuRepo := http_repo.NewIpaymuRepository()
+	paymentService := service.NewPaymentService(ipaymuRepo)
 
 	apiV1 := e.Group("/api/v1")
 	usersGroup := apiV1.Group("")
 
 	rest.NewUserHandler(usersGroup, userService)
+	rest.NewPaymentHandler(usersGroup, paymentService)
 
 	// Get host from environment variable, default to 127.0.0.1 if not set
 	host := os.Getenv("APP_HOST")
